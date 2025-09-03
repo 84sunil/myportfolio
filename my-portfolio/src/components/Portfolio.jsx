@@ -1,3 +1,5 @@
+import "./port.css";
+
 const projects = [
   {
     title: "Portfolio Website",
@@ -17,13 +19,13 @@ const projects = [
 ];
 
 const Portfolio = () => (
-  <section className="bg-dark text-white py-5" id="portfolio">
+  <section className=" text-white py-5" id="portfolio">
     <div className="container">
-      <h2 className="text-center mb-5">Portfolio</h2>
+      <h2 className="text-center mb-4">Portfolio</h2>
       <div className="row">
         {projects.map((project, index) => (
           <div className="col-md-4 mb-4" key={index}>
-            <div className="bg-secondary text-center p-4 rounded h-100">
+            <div className=" text-center p-4 rounded h-100">
               <h5 className="mb-3">{project.title}</h5>
               <a href={project.link} target="_blank" rel="noopener noreferrer">
                 <img

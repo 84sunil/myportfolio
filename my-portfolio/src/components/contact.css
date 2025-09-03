@@ -1,39 +1,42 @@
-/* Container */
+/* Container - centers the form */
 .contact-container {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f7f9fc;
-  padding: 20px;
+  min-height: 100vh;   /* full screen */
+  padding: 40px 20px;
+  background: transparent; /* let global background show */
 }
 
-/* Card */
+/* Glass effect box */
 .contact-box {
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  max-width: 500px;
   width: 100%;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.08); /* transparent glass */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  color: #fff;
   text-align: center;
 }
 
-/* Title */
+/* Title & subtitle */
 .contact-title {
-  font-size: 28px;
+  font-size: 2.2rem;
   font-weight: bold;
-  margin-bottom: 10px;
-  color: #222;
+  margin-bottom: 15px;
+  color: #000000;
 }
 
 .contact-subtitle {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #0a0909;
+  margin-bottom: 30px;
 }
 
-/* Form */
+/* Form styling */
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -42,60 +45,65 @@
 
 .contact-form label {
   text-align: left;
-  font-weight: 600;
-  color: #333;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #151414;
+  
 }
 
 .contact-form input,
 .contact-form textarea {
+  width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.3);
+  color: #0e0d0d;
+  font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s;
+  transition: border 0.3s ease;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-  border-color: #007bff;
+  border: 1px solid #0d6efd;
 }
 
 /* Button */
 .contact-form button {
-  background: #007bff;
-  color: #fff;
-  font-weight: 600;
-  border: none;
   padding: 12px;
-  border-radius: 8px;
+  border: none;
+  border-radius: 25px;
+  background: #0d6efd;
+  color: #000000;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .contact-form button:hover {
-  background: #0056b3;
-}
-
-.contact-form button:disabled {
-  background: #aaa;
-  cursor: not-allowed;
+  background: #0b5ed7;
+  transform: scale(1.05);
 }
 
 /* Status messages */
 .status {
   padding: 10px;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .status.success {
-  background: #e6f9ed;
-  color: #2e7d32;
+  background: rgba(25, 135, 84, 0.2);
+  color: #0c0d0d;
+  border: 1px solid rgba(25, 135, 84, 0.4);
 }
 
 .status.error {
-  background: #fdecea;
-  color: #c62828;
+  background: rgba(233, 174, 180, 0.2);
+  color: #981616;
+  border: 1px solid rgba(220, 53, 69, 0.4);
 }

@@ -1,0 +1,37 @@
+/* App background */
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: url("./assets/Waterfalls-for-desktop.jpg") no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* Glassmorphism Effect for Sections */
+section {
+  background: rgba(255, 255, 255, 0.05); /* Transparent */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 60px 30px;
+  margin: 40px auto;
+  width: 90%;
+  max-width: 1200px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Headings inside sections */
+section h1,
+section h2,
+section h3 {
+  color: #fff;
+}
+
+/* To make Hero section full screen */
+#home {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

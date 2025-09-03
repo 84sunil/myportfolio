@@ -1,0 +1,36 @@
+.skills-section {
+  background: rgba(255, 255, 255, 0.1); /* transparent glass */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+
+.skills-section h2 {
+  font-weight: bold;
+  color: black; 
+  letter-spacing: 2px;
+}
+
+
+.skill-text {
+  font-weight: bold;
+  color: black;
+}
+
+
+.progress {
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  font-weight: bold;
+  color: black; 
+  text-align: right;
+  padding-right: 10px;
+}

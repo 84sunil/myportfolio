@@ -1,0 +1,333 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Fira+Code:wght@300;400;500&display=swap');
+
+/* ── Tokens ──────────────────────────────────────────────── */
+:root {
+  --sv-bg: #07090e;
+  --sv-card: #0e1118;
+  --sv-border: rgba(255, 255, 255, 0.06);
+  --sv-text: #c8d0e0;
+  --sv-muted: #4a5268;
+  --c1: #2affd2;
+  /* teal  — Web Dev    */
+  --c2: #ff6b8a;
+  /* rose  — Front-end  */
+  --c3: #f7c948;
+  /* amber — Python     */
+}
+
+/* ── Section ─────────────────────────────────────────────── */
+#services {
+  background: var(--sv-bg);
+  min-height: 100vh;
+  padding: 110px 0 130px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Fira Code', monospace;
+}
+
+/* Diagonal stripe texture */
+#services::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-55deg,
+      transparent,
+      transparent 40px,
+      rgba(255, 255, 255, 0.012) 40px,
+      rgba(255, 255, 255, 0.012) 41px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Bottom glow band */
+#services::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 200px;
+  background: radial-gradient(ellipse, rgba(42, 255, 210, 0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: bandPulse 7s ease-in-out infinite;
+}
+
+@keyframes bandPulse {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Heading ─────────────────────────────────────────────── */
+#services h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: headIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@keyframes headIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Thin rule below heading */
+#services h2::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin: 14px auto 0;
+  background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+  border-radius: 2px;
+  animation: ruleGlow 4s ease-in-out infinite;
+}
+
+@keyframes ruleGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px var(--c1);
+  }
+
+  50% {
+    box-shadow: 0 0 18px var(--c3);
+  }
+}
+
+/* ── Grid ────────────────────────────────────────────────── */
+#services .row {
+  margin-top: 60px;
+  gap: 0;
+}
+
+#services .col-md-4 {
+  padding: 14px;
+  animation: cardUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+#services .col-md-4:nth-child(1) {
+  animation-delay: 0.12s;
+  --card-accent: var(--c1);
+}
+
+#services .col-md-4:nth-child(2) {
+  animation-delay: 0.26s;
+  --card-accent: var(--c2);
+}
+
+#services .col-md-4:nth-child(3) {
+  animation-delay: 0.40s;
+  --card-accent: var(--c3);
+}
+
+@keyframes cardUp {
+  from {
+    opacity: 0;
+    transform: translateY(36px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+#services .col-md-4>div {
+  background: var(--sv-card);
+  border: 1px solid var(--sv-border);
+  border-radius: 20px;
+  padding: 52px 32px 44px !important;
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+/* Top accent bar */
+#services .col-md-4>div::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: var(--card-accent);
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 0 16px var(--card-accent);
+  opacity: 0;
+  transition: opacity 0.4s ease, left 0.4s ease, right 0.4s ease;
+}
+
+/* Big faded number watermark */
+#services .col-md-4>div::after {
+  content: '0' counter(svc);
+  counter-increment: svc;
+  position: absolute;
+  bottom: -10px;
+  right: 16px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 7rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.03);
+  line-height: 1;
+  pointer-events: none;
+  transition: color 0.4s ease;
+  user-select: none;
+}
+
+#services .row {
+  counter-reset: svc;
+}
+
+/* Hover state */
+#services .col-md-4>div:hover {
+  transform: translateY(-14px) scale(1.02);
+  border-color: var(--card-accent);
+  box-shadow:
+    0 0 0 1px var(--card-accent),
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    0 0 50px color-mix(in srgb, var(--card-accent) 15%, transparent);
+}
+
+#services .col-md-4>div:hover::before {
+  opacity: 1;
+  left: 0;
+  right: 0;
+}
+
+#services .col-md-4>div:hover::after {
+  color: rgba(255, 255, 255, 0.06);
+}
+
+/* ── Icon circle ─────────────────────────────────────────── */
+.sv-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  border: 1px solid var(--card-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 28px;
+  font-size: 1.5rem;
+  background: color-mix(in srgb, var(--card-accent) 8%, transparent);
+  transition: transform 0.4s ease, background 0.4s ease;
+  position: relative;
+  z-index: 1;
+}
+
+#services .col-md-4>div:hover .sv-icon {
+  transform: rotate(6deg) scale(1.1);
+  background: color-mix(in srgb, var(--card-accent) 16%, transparent);
+}
+
+/* ── Title ───────────────────────────────────────────────── */
+#services h5 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #fff;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+#services .col-md-4>div:hover h5 {
+  color: var(--card-accent);
+}
+
+/* ── Description ─────────────────────────────────────────── */
+#services p {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.78rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--sv-muted);
+  position: relative;
+  z-index: 1;
+  margin-bottom: 28px;
+  transition: color 0.3s ease;
+}
+
+#services .col-md-4>div:hover p {
+  color: #8a95aa;
+}
+
+/* ── CTA link ────────────────────────────────────────────── */
+.sv-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--card-accent);
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+  transition: gap 0.3s ease, opacity 0.3s ease;
+  opacity: 0.7;
+}
+
+.sv-link::after {
+  content: '→';
+  transition: transform 0.3s ease;
+}
+
+#services .col-md-4>div:hover .sv-link {
+  gap: 14px;
+  opacity: 1;
+}
+
+#services .col-md-4>div:hover .sv-link::after {
+  transform: translateX(4px);
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #services {
+    padding: 70px 0 80px;
+  }
+
+  #services h2 {
+    font-size: 2.6rem;
+  }
+
+  #services .col-md-4>div:hover {
+    transform: translateY(-6px) scale(1.01);
+  }
+}

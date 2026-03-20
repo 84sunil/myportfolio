@@ -1,41 +1,29 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/yas.png";
+import "./Navbar.css"; // custom CSS
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg custom-navbar px-4 mb-5">
-      <Link
-        to="/"
-        className="navbar-brand fw-bold text-primary d-flex align-items-center"
-      >
+    <nav className="navbar">
+      <Link to="/" className="navbar-logo">
         <img
           src={logo}
           alt="Logo"
-          style={{ width: "120px", height: "120px", marginRight: "10px" }}
+          className="logo"
         />
       </Link>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div
-        className="collapse navbar-collapse justify-content-end"
-        id="navbarNav"
-      >
-        <ul className="navbar-nav">
-          {["Home", "About", "Services", "Portfolio", "Contact"].map((item) => (
-            <li className="nav-item mx-2" key={item}>
-              <a className="nav-link" href={`#${item.toLowerCase()}`}>
-                {item}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+
+      {/* Hamburger Menu */}
+      <input type="checkbox" id="menu-toggle" className="menu-toggle" />
+      <label htmlFor="menu-toggle" className="menu-icon">&#9776;</label>
+
+      <ul className="navbar-links">
+        {["Home", "About", "Services", "Portfolio", "Contact"].map((item) => (
+          <li key={item}>
+            <a href={`#${item.toLowerCase()}`}>{item}</a>
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 };

@@ -5,7 +5,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const handleHireMe = () => {
-    navigate("/contact");
+    navigate("/Contact");
   };
 
   const handleMyWork = () => {
@@ -13,34 +13,47 @@ const Hero = () => {
   };
 
   return (
-    <section className="hero-section text-white text-center py-5" id="home">
-      <div className="container">
-     
-        <div className="mb-3 social-icons">
-          <a href="https://www.facebook.com/share/1CNoexRpj3/" target="_blank" rel="noreferrer">
+    <section className="hero-section" id="home">
+      <div className="hero-container">
+        {/* Social Icons */}
+        <div className="social-icons">
+          <a
+            href="https://www.facebook.com/share/1CNoexRpj3/"
+            target="_blank"
+            rel="noreferrer"
+          >
             <i className="bi bi-facebook"></i>
           </a>
-          <a href="https://github.com/84sunil" target="_blank" rel="noreferrer">
+          <a
+            href="https://github.com/84sunil"
+            target="_blank"
+            rel="noreferrer"
+          >
             <i className="bi bi-github"></i>
           </a>
-          <a href="https://www.linkedin.com/in/sunil-luhar-a89392287?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noreferrer">
+          <a
+            href="https://www.linkedin.com/in/sunil-luhar-a89392287?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+            target="_blank"
+            rel="noreferrer"
+          >
             <i className="bi bi-linkedin"></i>
           </a>
         </div>
 
-        <h1 className="display-4 fw-bold">I'm a Developer</h1>
+        {/* Heading */}
+        <h1 className="hero-title">I'm a Developer</h1>
 
-
-        <p className="lead animated-text">
+        {/* Subtext */}
+        <p className="hero-subtext">
           Experienced designer creating websites, Developing and more.
         </p>
 
-       
-        <div className="mt-4">
-          <button className="btn btn-primary me-3" onClick={handleMyWork}>
+        {/* Buttons */}
+        <div className="hero-buttons">
+          <button className="btn-primary" onClick={handleMyWork}>
             My Work
           </button>
-          <button className="btn btn-outline-light" onClick={handleHireMe}>
+          <button className="btn-outline" onClick={handleHireMe}>
             Hire Me
           </button>
         </div>

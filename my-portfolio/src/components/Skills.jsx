@@ -1,4 +1,4 @@
-
+import './skill.css'
 const Skills = () => (
   <section className="skills-section text-white py-5" id="skills">
     <div className="container">
@@ -7,14 +7,14 @@ const Skills = () => (
         { name: 'HTML', level: '100%' },
         { name: 'CSS', level: '95%' },
         { name: 'JAVASCRIPT', level: '90%' },
-        { name: 'PYTHON', level: '85%' },
+        { name: 'PYTHON', level: '90%' },
         { name: 'REACT JS', level: '85%' },
         { name: 'BOOTSTRAP', level: '85%' },
-        { name: 'DJANGO', level: '50%' },
-        { name: 'MYSQL ', level: '85%' }
+        { name: 'DJANGO', level: '80%' },
+        { name: 'MYSQL ', level: '70%' }
       ].map(skill => (
         <div className="mb-4" key={skill.name}>
-          <h5>{skill.name}</h5>
+          <h5 data-level={skill.level}>{skill.name}</h5>
           <div className="progress">
             <div className="progress-bar bg-info" style={{ width: skill.level }}>{skill.level}</div>
           </div>

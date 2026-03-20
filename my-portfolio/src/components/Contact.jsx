@@ -44,7 +44,7 @@ export default function Contact() {
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   return (
     <div className="contact-container">

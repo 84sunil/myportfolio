@@ -5,11 +5,21 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const handleHireMe = () => {
-    navigate("/Contact");
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/contact");
+    }
   };
 
   const handleMyWork = () => {
-    navigate("/portfolio");
+    const portfolioSection = document.getElementById("portfolio");
+    if (portfolioSection) {
+      portfolioSection.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/portfolio");
+    }
   };
 
   return (

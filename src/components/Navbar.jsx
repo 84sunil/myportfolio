@@ -20,7 +20,7 @@ const Navbar = () => {
       <ul className="navbar-links">
         {["Home", "About", "Services", "Portfolio", "Contact"].map((item) => (
           <li key={item}>
-            <a href={`#${item.toLowerCase()}`}>{item}</a>
+            <a href={item === "Home" ? "/" : `/#${item.toLowerCase()}`}>{item}</a>
           </li>
         ))}
       </ul>

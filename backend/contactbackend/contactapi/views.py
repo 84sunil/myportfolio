@@ -92,7 +92,7 @@ def list_courses(request):
             'icon': c['icon'],
             'badge': c['badge'],
             'badgeColor': c['badge_color'],
-            'topics': c['topics']
+            'topics': c['topics'] if isinstance(c['topics'], list) else ["Topics coming soon"]
         })
     return Response(data)
 

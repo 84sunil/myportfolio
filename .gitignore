@@ -19,6 +19,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Django media uploads
+media/
+
 # OS
 .DS_Store
 Thumbs.db

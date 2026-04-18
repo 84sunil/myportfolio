@@ -248,19 +248,28 @@ def create_order(request):
     amount_paise = int(course.price) * 100
     user = request.user if request.user.is_authenticated else None
 
-    # ── Razorpay: validate keys before attempting order creation ──
-    if payment_method == "razorpay":
+    # ── Determine if Razorpay is actually configured ──
+    razorpay_configured = (
+        payment_method == "razorpay"
+        and not _is_placeholder(RAZORPAY_KEY_ID)
+        and not _is_placeholder(RAZORPAY_KEY_SECRET)
+    )
+
+    # If Razorpay is requested but keys not configured → auto-fallback to demo mode
+    if payment_method == "razorpay" and not razorpay_configured:
+        logger.warning(
+            "Razorpay keys not configured — falling back to DEMO mode for enrollment."
+        )
+        payment_method = "simulated"  # treat as simulation
+
+    rz_client = None
+    if razorpay_configured:
         try:
             rz_client = get_razorpay_client()
         except ValueError as e:
-            logger.error("Razorpay keys not configured: %s", e)
-            return Response(
-                {
-                    "error": str(e),
-                    "hint": "Add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to your .env file.",
-                },
-                status=status.HTTP_503_SERVICE_UNAVAILABLE,
-            )
+            logger.error("Razorpay client init failed: %s", e)
+            razorpay_configured = False
+            payment_method = "simulated"
 
     try:
         with transaction.atomic():
@@ -278,13 +287,13 @@ def create_order(request):
 
             order_id = ""
 
-            if payment_method == "razorpay":
+            if razorpay_configured and rz_client:
                 # Create real Razorpay order
                 razorpay_order = rz_client.order.create(
                     {
                         "amount": amount_paise,
                         "currency": "INR",
-                        "payment_capture": 1,  # auto-capture
+                        "payment_capture": 1,
                         "notes": {
                             "enrollment_id": str(enrollment.id),
                             "course": course.title,
@@ -294,7 +303,7 @@ def create_order(request):
                 )
                 order_id = razorpay_order["id"]
             else:
-                # Simulated (card/upi testing) – use a traceable UUID
+                # Simulated / demo mode
                 order_id = "SIM_ORD_" + str(uuid.uuid4()).replace("-", "")[:16].upper()
 
             enrollment.external_order_id = order_id
@@ -328,7 +337,9 @@ def create_order(request):
             "amount": amount_paise,
             "currency": "INR",
             "enrollment_id": enrollment.id,
-            "key": RAZORPAY_KEY_ID,   # Frontend needs this to open Razorpay checkout
+            # Send real key only if Razorpay is configured; empty string = demo mode
+            "key": RAZORPAY_KEY_ID if razorpay_configured else "",
+            "demo_mode": not razorpay_configured,
         },
         status=status.HTTP_201_CREATED,
     )

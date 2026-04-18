@@ -150,38 +150,25 @@ function PaymentModal({ course, onClose }) {
     return {};
   };
 
-  /* ── Real Payment Handler (Razorpay) ── */
+  /* ── Payment Handler ── */
   const handlePayment = async (method) => {
     setStep("loading");
     setApiError("");
     try {
       const orderData = await callCreateOrder(student, course, method);
-      
-      if (method === 'razorpay') {
-        // Validate that the server returned a real Razorpay key
-        if (!orderData.key || orderData.key.startsWith('rzp_test_YOUR') || orderData.key === 'rzp_test_placeholder') {
-          throw new Error(
-            "Razorpay is not configured on the server yet.\n" +
-            "Add your RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to the .env file.\n" +
-            "Get keys at: https://dashboard.razorpay.com/app/keys"
-          );
-        }
 
-        // Validate we got a real Razorpay order ID
-        if (!orderData.order_id || orderData.order_id.startsWith('SIM_')) {
-          throw new Error(
-            "Razorpay order creation failed. Check your API keys and Razorpay account status."
-          );
-        }
+      // If server returned demo_mode (Razorpay keys not configured), run simulation
+      const useSimulation = orderData.demo_mode || method !== 'razorpay';
 
-        // Load Razorpay Script dynamically
+      if (!useSimulation) {
+        // ── Real Razorpay Checkout ──
         const loadScript = () => new Promise((resolve, reject) => {
           if (window.Razorpay) { resolve(); return; }
           const script = document.createElement("script");
           script.src = "https://checkout.razorpay.com/v1/checkout.js";
           script.async = true;
           script.onload = resolve;
-          script.onerror = () => reject(new Error("Failed to load Razorpay checkout script. Check your internet connection."));
+          script.onerror = () => reject(new Error("Failed to load Razorpay checkout. Check your internet connection."));
           document.body.appendChild(script);
         });
 
@@ -209,10 +196,7 @@ function PaymentModal({ course, onClose }) {
             }
           },
           modal: {
-            ondismiss: () => {
-              // User closed Razorpay modal — go back to method selection
-              setStep("method");
-            }
+            ondismiss: () => setStep("method")
           },
           prefill: {
             name: student.name,
@@ -223,9 +207,10 @@ function PaymentModal({ course, onClose }) {
         };
         const rzp = new window.Razorpay(options);
         rzp.open();
-        // Keep loading state while Razorpay modal is open
+        // Stay on loading while Razorpay modal is open
+
       } else {
-        // Simulated success for demo (card/upi testing)
+        // ── Demo / Simulation Mode ──
         setTimeout(async () => {
           try {
             const vData = await callVerify(

@@ -86,11 +86,13 @@ async function callCreateOrder(studentData, course, method = "simulated") {
       method: method
     }),
   });
+  const data = await res.json();
   if (!res.ok) {
-    const e = await res.json();
-    throw new Error(e.error || "Backend error creating order.");
+    // Provide the hint if available (e.g. Razorpay keys not set)
+    const msg = data.hint ? `${data.error}\n\n${data.hint}` : (data.error || "Backend error creating order.");
+    throw new Error(msg);
   }
-  return res.json();
+  return data;
 }
 
 async function callVerify(enrollmentId, transactionId, method = "simulated", extraData = {}) {
@@ -151,52 +153,86 @@ function PaymentModal({ course, onClose }) {
   /* ── Real Payment Handler (Razorpay) ── */
   const handlePayment = async (method) => {
     setStep("loading");
+    setApiError("");
     try {
       const orderData = await callCreateOrder(student, course, method);
       
-      if (method === 'razorpay' && orderData.key) {
-        // Load Razorpay Script
-        const script = document.createElement("script");
-        script.src = "https://checkout.razorpay.com/v1/checkout.js";
-        script.async = true;
-        script.onload = () => {
-          const options = {
-            key: orderData.key,
-            amount: orderData.amount,
-            currency: orderData.currency,
-            name: "My Portfolio Courses",
-            description: `Enrolling in ${course.title}`,
-            order_id: orderData.order_id,
-            handler: async (response) => {
-              try {
-                const vData = await callVerify(orderData.enrollment_id, response.razorpay_payment_id, 'razorpay', {
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature,
-                });
-                setSuccessData(vData);
-                setStep("success");
-              } catch (err) {
-                setApiError(err.message);
-                setStep("error");
-              }
-            },
-            prefill: {
-              name: student.name,
-              email: student.email,
-              contact: student.phone
-            },
-            theme: { color: course.accent }
-          };
-          const rzp = new window.Razorpay(options);
-          rzp.open();
+      if (method === 'razorpay') {
+        // Validate that the server returned a real Razorpay key
+        if (!orderData.key || orderData.key.startsWith('rzp_test_YOUR') || orderData.key === 'rzp_test_placeholder') {
+          throw new Error(
+            "Razorpay is not configured on the server yet.\n" +
+            "Add your RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET to the .env file.\n" +
+            "Get keys at: https://dashboard.razorpay.com/app/keys"
+          );
+        }
+
+        // Validate we got a real Razorpay order ID
+        if (!orderData.order_id || orderData.order_id.startsWith('SIM_')) {
+          throw new Error(
+            "Razorpay order creation failed. Check your API keys and Razorpay account status."
+          );
+        }
+
+        // Load Razorpay Script dynamically
+        const loadScript = () => new Promise((resolve, reject) => {
+          if (window.Razorpay) { resolve(); return; }
+          const script = document.createElement("script");
+          script.src = "https://checkout.razorpay.com/v1/checkout.js";
+          script.async = true;
+          script.onload = resolve;
+          script.onerror = () => reject(new Error("Failed to load Razorpay checkout script. Check your internet connection."));
+          document.body.appendChild(script);
+        });
+
+        await loadScript();
+
+        const options = {
+          key: orderData.key,
+          amount: orderData.amount,
+          currency: orderData.currency || "INR",
+          name: "Sunil BK – Courses",
+          description: `Enrolling in ${course.title}`,
+          order_id: orderData.order_id,
+          handler: async (response) => {
+            try {
+              const vData = await callVerify(orderData.enrollment_id, response.razorpay_payment_id, 'razorpay', {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              });
+              setSuccessData(vData);
+              setStep("success");
+            } catch (err) {
+              setApiError(err.message);
+              setStep("error");
+            }
+          },
+          modal: {
+            ondismiss: () => {
+              // User closed Razorpay modal — go back to method selection
+              setStep("method");
+            }
+          },
+          prefill: {
+            name: student.name,
+            email: student.email,
+            contact: student.phone
+          },
+          theme: { color: course.accent }
         };
-        document.body.appendChild(script);
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+        // Keep loading state while Razorpay modal is open
       } else {
-        // Simulated success for other methods
+        // Simulated success for demo (card/upi testing)
         setTimeout(async () => {
           try {
-            const vData = await callVerify(orderData.enrollment_id, "SIM_" + Math.random().toString(36).substring(7), method);
+            const vData = await callVerify(
+              orderData.enrollment_id,
+              "SIM_" + Math.random().toString(36).substring(2, 10).toUpperCase(),
+              method
+            );
             setSuccessData(vData);
             setStep("success");
           } catch (err) {

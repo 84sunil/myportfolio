@@ -55,7 +55,7 @@ const Hero = () => {
 
         {/* Subtext */}
         <p className="hero-subtext">
-          Experienced designer creating websites, Developing and more.
+          Experienced designer creating websites, Developing. ..!
         </p>
 
         {/* Buttons */}

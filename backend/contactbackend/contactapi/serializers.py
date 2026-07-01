@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import ContactMessage, Course, CourseVideo, CourseEnrollment, Payment
+from .models import ContactMessage, Course, CourseVideo, CourseEnrollment, Payment, Certificate, CourseProgress
 
 class ContactMessageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,3 +37,23 @@ class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = '__all__'
+
+class CourseProgressSerializer(serializers.ModelSerializer):
+    course_title = serializers.CharField(source='course.title', read_only=True)
+    
+    class Meta:
+        model = CourseProgress
+        fields = ['id', 'user', 'course', 'course_title', 'videos_watched', 'completion_percentage', 'last_watched_at']
+
+class CertificateSerializer(serializers.ModelSerializer):
+    course_title = serializers.CharField(source='course.title', read_only=True)
+    username = serializers.CharField(source='user.username', read_only=True)
+    
+    class Meta:
+        model = Certificate
+        fields = [
+            'id', 'certificate_id', 'user', 'username', 'course', 'course_title',
+            'issued_at', 'completion_date', 'signed_by', 'instructor_title'
+        ]
+        read_only_fields = ['issued_at']
+

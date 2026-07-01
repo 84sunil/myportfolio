@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
@@ -49,7 +49,10 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("sbk_enrolled_courses"); // Clear enrollment data on logout
     setUser(null);
+    // Redirect to home page
+    window.location.href = "/";
   };
 
   return (

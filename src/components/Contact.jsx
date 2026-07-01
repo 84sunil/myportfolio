@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import API_BASE from '../apiConfig';
 import './contact.css'; // Custom CSS
 
 export default function Contact() {
@@ -25,7 +26,7 @@ export default function Contact() {
     setStatus('');
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/contact/", formData);
+      const response = await axios.post(`${API_BASE}/contact/`, formData);
 
       if (response.status === 201) {
         setStatus('Message sent successfully!');

@@ -16,7 +16,7 @@ const About = () => {
           </p>
           <ul>
             <li><strong>Name:</strong> SUNIL LUHAR</li>
-            <li><strong>Phone:</strong> +91 8469396610</li>
+            <li><strong>Phone:</strong> +9779747301177</li>
             <li><strong>Email:</strong> sbk8469@gmaail.com</li>
             <li><strong>Twitter:</strong> Sunil Bk</li>
           </ul>

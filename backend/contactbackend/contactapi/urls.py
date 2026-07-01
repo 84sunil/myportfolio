@@ -16,12 +16,21 @@ urlpatterns = [
     # Courses
     path('courses/', views.list_courses, name='list_courses'),
     path('courses/my/', views.my_courses, name='my_courses'),
-    path('courses/<str:course_id_string>/videos/', views.course_videos, name='course_videos'),
-
-    # Payment Gateway
     path('courses/create-order/', views.create_order, name='create_order'),
     path('courses/verify-payment/', views.verify_payment, name='verify_payment'),
-
-    # Razorpay Webhook (server-side confirmation – configure in Razorpay Dashboard)
     path('courses/webhook/', views.razorpay_webhook, name='razorpay_webhook'),
+
+    # Course Progress
+    path('courses/track-video/', views.track_video_completion, name='track_video_completion'),
+    path('courses/<int:course_id>/progress/', views.get_course_progress, name='get_course_progress'),
+
+    # Certificates
+    path('certificates/generate/', views.generate_certificate, name='generate_certificate'),
+    path('certificates/', views.get_user_certificates, name='get_user_certificates'),
+    path('certificates/<int:certificate_id>/', views.get_certificate, name='get_certificate'),
+
+    # Course Access (must come after specific paths above)
+    path('courses/<str:course_id_string>/videos/', views.course_videos, name='course_videos'),
+    path('courses/<str:course_id_string>/content/', views.course_content, name='course_content'),
 ]
+

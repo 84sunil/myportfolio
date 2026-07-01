@@ -20,13 +20,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load environment variables from .env file
 load_dotenv(os.path.join(BASE_DIR, '.env'))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-key-for-dev')
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-key-for-dev')
+
+if not DEBUG and SECRET_KEY in ('', 'django-insecure-key-for-dev'):
+    raise ValueError('The SECRET_KEY environment variable must be set in production.')
+
+ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',') if host.strip()]
 
 
 # Application definition
@@ -57,16 +60,24 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
+    origin.strip() for origin in os.getenv(
+        'CORS_ALLOWED_ORIGINS',
+        'http://localhost:5173,http://127.0.0.1:5173'
+    ).split(',') if origin.strip()
 ]
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 
-# Optional: Allow all headers and methods (for development only)
-if DEBUG:
-    CORS_ALLOW_ALL_ORIGINS = True  
-else:
-    CORS_ALLOW_ALL_ORIGINS = False
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_HSTS_SECONDS = 2592000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
 
 CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 CORS_ALLOW_HEADERS = [
@@ -86,7 +97,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ]
 }
 

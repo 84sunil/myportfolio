@@ -2,16 +2,16 @@
 
 /* ── Root Tokens ─────────────────────────────────────────── */
 :root {
-  --bg: #080b10;
-  --surface: #0d1117;
-  --card-bg: #111722;
-  --border: rgba(255, 255, 255, 0.06);
-  --glow: #4af0c4;
-  --glow-alt: #7c6ef7;
-  --text-primary: #e8edf5;
-  --text-muted: #5a6478;
-  --accent: #4af0c4;
-  --gold: #f0b84a;
+  --bg: #02000a;
+  --surface: #0a0314;
+  --card-bg: rgba(255, 255, 255, 0.02);
+  --border: rgba(255, 255, 255, 0.05);
+  --glow: #22d3ee;
+  --glow-alt: #818cf8;
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent: #22d3ee;
+  --gold: #f472b6;
 }
 
 /* ── Section ─────────────────────────────────────────────── */
@@ -21,7 +21,7 @@
   padding: 100px 0 120px;
   position: relative;
   overflow: hidden;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Outfit', sans-serif;
 }
 
 /* Ambient background blobs */
@@ -65,9 +65,9 @@
 
 /* ── Heading ─────────────────────────────────────────────── */
 #portfolio h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Outfit', sans-serif;
   font-size: clamp(2.8rem, 6vw, 5rem);
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text-primary);
   position: relative;
@@ -101,10 +101,11 @@
 #portfolio .col-md-4>div {
   background: var(--card-bg);
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: 24px;
   padding: 28px 24px 32px !important;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(24px);
   transition:
     transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
     border-color 0.4s ease,
@@ -120,7 +121,7 @@
   left: 0;
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, rgba(74, 240, 196, 0.18) 0%, transparent 60%);
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.18) 0%, transparent 60%);
   border-radius: 0 0 80px 0;
   transition: width 0.4s ease, height 0.4s ease;
   z-index: 0;
@@ -145,7 +146,7 @@
   box-shadow:
     0 0 0 1px var(--card-accent),
     0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(74, 240, 196, 0.08);
+    0 0 40px color-mix(in srgb, var(--card-accent) 20%, transparent);
 }
 
 #portfolio .col-md-4>div:hover::before {
@@ -155,7 +156,7 @@
 
 /* ── Card Title ──────────────────────────────────────────── */
 #portfolio h5 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1.3rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -221,10 +222,10 @@
   gap: 8px;
   margin-top: 20px !important;
   padding: 10px 22px;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-primary);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -251,8 +252,8 @@
 #portfolio .btn-outline-light:hover {
   background: var(--card-accent, var(--glow));
   border-color: var(--card-accent, var(--glow));
-  color: #000;
-  box-shadow: 0 4px 20px rgba(74, 240, 196, 0.3);
+  color: #02000a;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--card-accent) 40%, transparent);
   transform: translateY(-2px);
 }
 

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class ContactMessage(models.Model):
@@ -93,3 +94,49 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"{self.transaction_id} – {self.status}"
+
+
+class CourseProgress(models.Model):
+    """Tracks video completion progress for each user."""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="course_progress")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="user_progress")
+    videos_watched = models.JSONField(default=list, help_text="List of video IDs watched")
+    completion_percentage = models.IntegerField(default=0)
+    last_watched_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('user', 'course')
+        ordering = ['-last_watched_at']
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.course.title} ({self.completion_percentage}%)"
+    
+    def update_completion(self):
+        """Calculate completion percentage based on videos watched."""
+        total_videos = self.course.videos.count()
+        if total_videos == 0:
+            self.completion_percentage = 0
+        else:
+            self.completion_percentage = round((len(self.videos_watched) / total_videos) * 100)
+        self.save(update_fields=['completion_percentage'])
+
+
+class Certificate(models.Model):
+    """Stores issued certificates for completed courses."""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="certificates")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="certificates")
+    enrollment = models.ForeignKey(CourseEnrollment, on_delete=models.SET_NULL, null=True, blank=True)
+    
+    certificate_id = models.CharField(max_length=50, unique=True)
+    issued_at = models.DateTimeField(auto_now_add=True)
+    completion_date = models.DateField(auto_now_add=True)
+    signed_by = models.CharField(max_length=100, default="Sunil Kumar")
+    instructor_title = models.CharField(max_length=100, default="Founder & Instructor")
+    
+    class Meta:
+        ordering = ['-issued_at']
+        unique_together = ('user', 'course')
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.course.title} Certificate"
+

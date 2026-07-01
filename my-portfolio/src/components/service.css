@@ -2,17 +2,17 @@
 
 /* ── Tokens ──────────────────────────────────────────────── */
 :root {
-  --sv-bg: #07090e;
-  --sv-card: #0e1118;
-  --sv-border: rgba(255, 255, 255, 0.06);
-  --sv-text: #c8d0e0;
-  --sv-muted: #4a5268;
-  --c1: #2affd2;
-  /* teal  — Web Dev    */
-  --c2: #ff6b8a;
-  /* rose  — Front-end  */
-  --c3: #f7c948;
-  /* amber — Python     */
+  --sv-bg: #02000a;
+  --sv-card: rgba(255, 255, 255, 0.02);
+  --sv-border: rgba(255, 255, 255, 0.05);
+  --sv-text: #f8fafc;
+  --sv-muted: #94a3b8;
+  --c1: #22d3ee;
+  /* cyan */
+  --c2: #f472b6;
+  /* pink */
+  --c3: #818cf8;
+  /* indigo */
 }
 
 /* ── Section ─────────────────────────────────────────────── */
@@ -22,7 +22,7 @@
   padding: 110px 0 130px;
   position: relative;
   overflow: hidden;
-  font-family: 'Fira Code', monospace;
+  font-family: 'Outfit', sans-serif;
 }
 
 /* Diagonal stripe texture */
@@ -73,7 +73,7 @@
 
 /* ── Heading ─────────────────────────────────────────────── */
 #services h2 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Outfit', sans-serif;
   font-size: clamp(3rem, 6vw, 5.5rem);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -163,10 +163,11 @@
 #services .col-md-4>div {
   background: var(--sv-card);
   border: 1px solid var(--sv-border);
-  border-radius: 20px;
+  border-radius: 24px;
   padding: 52px 32px 44px !important;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(24px);
   transition:
     transform 0.45s cubic-bezier(0.23, 1, 0.32, 1),
     border-color 0.4s ease,
@@ -183,7 +184,7 @@
   height: 2px;
   background: var(--card-accent);
   border-radius: 0 0 4px 4px;
-  box-shadow: 0 0 16px var(--card-accent);
+  box-shadow: 0 0 20px var(--card-accent);
   opacity: 0;
   transition: opacity 0.4s ease, left 0.4s ease, right 0.4s ease;
 }
@@ -195,10 +196,10 @@
   position: absolute;
   bottom: -10px;
   right: 16px;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 7rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.02);
   line-height: 1;
   pointer-events: none;
   transition: color 0.4s ease;
@@ -253,9 +254,9 @@
 
 /* ── Title ───────────────────────────────────────────────── */
 #services h5 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1.55rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.01em;
   color: #fff;
   margin-bottom: 14px;
@@ -270,8 +271,8 @@
 
 /* ── Description ─────────────────────────────────────────── */
 #services p {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.78rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
   font-weight: 300;
   line-height: 1.8;
   color: var(--sv-muted);
@@ -290,17 +291,17 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Fira Code', monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--card-accent);
   text-decoration: none;
   position: relative;
   z-index: 1;
   transition: gap 0.3s ease, opacity 0.3s ease;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .sv-link::after {

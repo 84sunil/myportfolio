@@ -2,12 +2,12 @@
 
 /* ── Tokens ──────────────────────────────────────────────── */
 :root {
-  --sk-bg: #06080f;
-  --sk-surface: #0c101a;
-  --sk-line: rgba(255, 255, 255, 0.05);
-  --sk-muted: #3a4055;
-  --sk-text: #d6dce8;
-  --sk-dim: #5c6680;
+  --sk-bg: #02000a;
+  --sk-surface: rgba(255, 255, 255, 0.02);
+  --sk-line: rgba(255, 255, 255, 0.04);
+  --sk-muted: #94a3b8;
+  --sk-text: #f8fafc;
+  --sk-dim: #475569;
 }
 
 /* ── Section ─────────────────────────────────────────────── */
@@ -17,7 +17,7 @@
   padding: 100px 0 130px;
   position: relative;
   overflow: hidden;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Outfit', sans-serif;
 }
 
 /* Grid lines background */
@@ -40,27 +40,19 @@
   position: absolute;
   width: 700px;
   height: 700px;
-  background: radial-gradient(circle, rgba(42, 255, 210, 0.05) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 65%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 0;
   animation: orbPulse 6s ease-in-out infinite;
+  filter: blur(40px);
 }
 
 @keyframes orbPulse {
-
-  0%,
-  100% {
-    opacity: 0.6;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  50% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1);
-  }
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 .skills-section .container {
@@ -71,10 +63,10 @@
 
 /* ── Heading ─────────────────────────────────────────────── */
 .skills-section h2 {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: clamp(2.6rem, 5.5vw, 4.5rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: #fff;
   position: relative;
   display: inline-block;
@@ -84,15 +76,8 @@
 }
 
 @keyframes headingDrop {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+  from { opacity: 0; transform: translateX(-50%) translateY(-24px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
 .skills-section h2::after {
@@ -102,21 +87,14 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #2affd2, #9b7ef8, transparent);
-  box-shadow: 0 0 16px #2affd2;
+  background: linear-gradient(90deg, transparent, #22d3ee, #818cf8, transparent);
+  box-shadow: 0 0 16px #22d3ee;
   animation: lineGlow 3s ease-in-out infinite;
 }
 
 @keyframes lineGlow {
-
-  0%,
-  100% {
-    box-shadow: 0 0 10px #2affd2;
-  }
-
-  50% {
-    box-shadow: 0 0 24px #9b7ef8;
-  }
+  0%, 100% { box-shadow: 0 0 10px #22d3ee; }
+  50% { box-shadow: 0 0 24px #818cf8; }
 }
 
 /* ── Skill Row ───────────────────────────────────────────── */
@@ -179,10 +157,10 @@
 
 /* ── Label ───────────────────────────────────────────────── */
 .skills-section h5 {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--sk-text);
   margin-bottom: 10px;

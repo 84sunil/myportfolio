@@ -17,27 +17,27 @@
 /* ── Design Tokens ── */
 :root {
   /* Colors */
-  --bg: #050b12;
-  --bg-soft: #080f1a;
-  --surface: rgba(255, 255, 255, 0.04);
-  --surface-md: rgba(255, 255, 255, 0.07);
-  --border: rgba(255, 255, 255, 0.08);
-  --border-light: rgba(255, 255, 255, 0.14);
+  --bg: #02000a;
+  --bg-soft: #080315;
+  --surface: rgba(255, 255, 255, 0.02);
+  --surface-md: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-light: rgba(255, 255, 255, 0.12);
 
-  --cyan: #00d4ff;
-  --cyan-dim: rgba(0, 212, 255, 0.15);
-  --indigo: #6366f1;
-  --indigo-dim: rgba(99, 102, 241, 0.15);
-  --rose: #f43f5e;
-  --rose-dim: rgba(244, 63, 94, 0.12);
-  --gold: #f59e0b;
+  --cyan: #22d3ee;
+  --cyan-dim: rgba(34, 211, 238, 0.15);
+  --indigo: #818cf8;
+  --indigo-dim: rgba(129, 140, 248, 0.15);
+  --rose: #f472b6;
+  --rose-dim: rgba(244, 114, 182, 0.12);
+  --gold: #fbbf24;
 
-  --text: #f0f4f8;
-  --text-muted: rgba(240, 244, 248, 0.45);
-  --text-faint: rgba(240, 244, 248, 0.22);
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-faint: #475569;
 
   /* Typography */
-  --font-display: 'Bebas Neue', sans-serif;
+  --font-display: 'Outfit', sans-serif;
   --font-body: 'Outfit', sans-serif;
 
   /* Spacing scale */
@@ -49,24 +49,24 @@
   --space-2xl: 120px;
 
   /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 24px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.55);
-  --glow-cyan: 0 0 40px rgba(0, 212, 255, 0.22);
-  --glow-indigo: 0 0 40px rgba(99, 102, 241, 0.22);
+  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.6);
+  --glow-cyan: 0 0 50px rgba(34, 211, 238, 0.15);
+  --glow-indigo: 0 0 50px rgba(129, 140, 248, 0.15);
 
   /* Transitions */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --dur-fast: 0.18s;
-  --dur-mid: 0.28s;
-  --dur-slow: 0.45s;
+  --dur-fast: 0.2s;
+  --dur-mid: 0.4s;
+  --dur-slow: 0.6s;
 }
 
 /* ── Base ── */
@@ -243,20 +243,36 @@ section+section::before {
 
 /* ── Glass Card ── */
 .card {
-  background: var(--surface);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
-  backdrop-filter: blur(16px);
-  transition: transform var(--dur-mid) var(--ease-out),
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  transition: transform var(--dur-mid) var(--ease-spring),
     box-shadow var(--dur-mid) var(--ease-out),
     border-color var(--dur-mid) ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0;
+  transition: opacity var(--dur-mid) ease;
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px) scale(1.01);
   border-color: var(--border-light);
-  box-shadow: var(--shadow-md), var(--glow-cyan);
+  box-shadow: var(--shadow-md), var(--glow-indigo);
+}
+
+.card:hover::before {
+  opacity: 1;
 }
 
 /* ── Buttons ── */

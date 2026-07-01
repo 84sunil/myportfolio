@@ -37,52 +37,43 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 55% at 15% 30%, rgba(0, 212, 255, 0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 50% at 85% 70%, rgba(99, 102, 241, 0.14) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 50% 100%, rgba(244, 63, 94, 0.09) 0%, transparent 65%);
-  animation: meshDrift 14s ease-in-out infinite alternate;
+    radial-gradient(ellipse 80% 60% at 20% 40%, rgba(34, 211, 238, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 80% 60%, rgba(129, 140, 248, 0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 100%, rgba(244, 114, 182, 0.12) 0%, transparent 60%);
+  animation: meshDrift 18s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
 @keyframes meshDrift {
-  from {
-    transform: scale(1) rotate(0deg);
-  }
-
-  to {
-    transform: scale(1.06) rotate(1.5deg);
-  }
+  from { transform: scale(1) rotate(0deg); }
+  to { transform: scale(1.1) rotate(2deg); }
 }
 
 /* ── Floating orbs ── */
 .hero-section::after {
   content: '';
   position: absolute;
-  width: 420px;
-  height: 420px;
+  width: 500px;
+  height: 500px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.07) 0%, transparent 70%);
-  top: -100px;
-  right: -80px;
-  animation: orbFloat 10s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
+  top: -150px;
+  right: -100px;
+  animation: orbFloat 12s ease-in-out infinite alternate;
   pointer-events: none;
+  filter: blur(40px);
 }
 
 @keyframes orbFloat {
-  from {
-    transform: translate(0, 0) scale(1);
-  }
-
-  to {
-    transform: translate(-30px, 40px) scale(1.1);
-  }
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(-40px, 60px) scale(1.2); }
 }
 
 /* ── Grid lines (subtle) ── */
 .hero-container {
   position: relative;
   z-index: 2;
-  max-width: 820px;
+  max-width: 900px;
   width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -95,9 +86,9 @@
 /* ── Social icons ── */
 .social-icons {
   display: flex;
-  gap: 10px;
-  margin-bottom: 36px;
-  animation: riseIn 0.6s ease both;
+  gap: 12px;
+  margin-bottom: 40px;
+  animation: riseIn 0.8s var(--ease-out) both;
 }
 
 .social-icons a {
@@ -105,16 +96,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-full);
   background: var(--surface);
   border: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 1.15rem;
+  color: var(--text-muted);
+  font-size: 1.3rem;
   text-decoration: none;
-  backdrop-filter: blur(10px);
-  transition: color 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+  backdrop-filter: blur(20px);
+  transition: all var(--dur-mid) var(--ease-spring);
   overflow: hidden;
 }
 
@@ -124,7 +115,7 @@
   inset: 0;
   background: linear-gradient(135deg, var(--cyan), var(--indigo));
   opacity: 0;
-  transition: opacity 0.25s;
+  transition: opacity var(--dur-mid);
   border-radius: inherit;
 }
 
@@ -136,8 +127,8 @@
 .social-icons a:hover {
   color: #fff;
   border-color: transparent;
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 12px 30px rgba(0, 212, 255, 0.28);
+  transform: translateY(-6px) scale(1.1);
+  box-shadow: 0 16px 40px rgba(34, 211, 238, 0.3);
 }
 
 .social-icons a:hover::before {
@@ -146,41 +137,42 @@
 
 /* ── Eyebrow label ── */
 .hero-container::before {
-  content: '< Available for Projects />';
+  content: 'Available for Projects';
   display: block;
-  font-family: 'Courier New', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--cyan);
-  background: rgba(0, 212, 255, 0.07);
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  border-radius: 100px;
-  padding: 5px 16px;
-  margin-bottom: 22px;
-  animation: riseIn 0.55s 0.05s ease both;
+  background: var(--cyan-dim);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-radius: var(--radius-full);
+  padding: 8px 20px;
+  margin-bottom: 28px;
+  animation: riseIn 0.8s 0.1s var(--ease-out) both;
+  box-shadow: 0 4px 20px rgba(34, 211, 238, 0.15);
 }
 
 /* ── Headline ── */
 .hero-title {
-  font-family: var(--font-hero);
-  font-size: clamp(4rem, 12vw, 8.5rem);
-  line-height: 0.95;
-  letter-spacing: 0.02em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(4rem, 10vw, 7.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: var(--text);
-  margin: 0 0 6px;
-  animation: riseIn 0.6s 0.15s ease both;
+  margin: 0 0 16px;
+  animation: riseIn 0.8s 0.2s var(--ease-out) both;
 
   /* Gradient stroke effect */
-  background: linear-gradient(140deg,
-      #ffffff 0%,
-      var(--cyan) 40%,
-      var(--indigo) 80%);
+  background: linear-gradient(140deg, #ffffff 0%, var(--cyan) 40%, var(--indigo) 80%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 
   /* Subtle glow */
-  filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.22));
+  filter: drop-shadow(0 0 40px rgba(34, 211, 238, 0.3));
 }
 
 /* ── Subtext / typing ── */

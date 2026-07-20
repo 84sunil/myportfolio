@@ -1,24 +1,21 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
-
-export const AuthContext = createContext();
-
+import { useCallback, useEffect, useState } from "react";
 import API_BASE from "../apiConfig";
+import { AuthContext } from "./AuthContext";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      fetchUser(token);
-    } else {
-      setLoading(false);
-    }
+  const logout = useCallback(() => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("sbk_enrolled_courses");
+    setUser(null);
+    window.location.href = "/";
   }, []);
 
-  const fetchUser = async (token) => {
+  const fetchUser = useCallback(async (token) => {
     try {
       const res = await axios.get(`${API_BASE}/auth/me/`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -31,7 +28,17 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [logout]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      fetchUser(token);
+    } else {
+      setLoading(false);
+    }
+  }, [fetchUser]);
+
 
   const login = async (username, password) => {
     const res = await axios.post(`${API_BASE}/auth/login/`, { username, password });
@@ -44,15 +51,6 @@ export const AuthProvider = ({ children }) => {
   const register = async (username, email, password) => {
     await axios.post(`${API_BASE}/auth/register/`, { username, email, password });
     return login(username, password);
-  };
-
-  const logout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("sbk_enrolled_courses"); // Clear enrollment data on logout
-    setUser(null);
-    // Redirect to home page
-    window.location.href = "/";
   };
 
   return (

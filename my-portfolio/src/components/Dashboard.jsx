@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../context/AuthContext";
-import "./courses.css"; // Reuse course styles
+import { useContext, useEffect, useState } from "react";
 import API_BASE from "../apiConfig";
+import { AuthContext } from "../context/AuthContext.js";
+import "./courses.css"; // Reuse course styles
 
 /* ── Videos Modal Component ── */
 function VideosModal({ course, onClose }) {

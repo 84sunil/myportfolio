@@ -10,7 +10,8 @@ import Navbar from './components/Navbar';
 import Portfolio from './components/Portfolio';
 import Services from './components/Services';
 import Skills from './components/Skills';
-import { AuthContext, AuthProvider } from './context/AuthContext';
+import { AuthContext } from './context/AuthContext.js';
+import { AuthProvider } from './context/AuthContext.jsx';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {

@@ -50,9 +50,9 @@ class CourseVideo(models.Model):
 class CourseEnrollment(models.Model):
     """Stores user details collected before payment."""
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="enrollments")
-    
-    # New FK reference
-    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True)
+    # Course reference should cascade deletions so enrollments are removed
+    # when the course is deleted through admin.
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)
     
     name = models.CharField(max_length=150)
     email = models.EmailField()

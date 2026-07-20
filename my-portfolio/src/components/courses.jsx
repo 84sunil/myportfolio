@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import API_BASE from "../apiConfig";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthContext.js";
 import "./courses.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -28,9 +28,6 @@ function saveEnrollment(courseId, data) {
   }
 }
 
-function getEnrollmentData(courseId) {
-  return getEnrolled().find(e => e.courseId === courseId) || null;
-}
 
 
 /* ══════════════════════════════════════════════════════════════════
